@@ -6,7 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Adsfwc\\Api\\ChangePrice' => $baseDir . '/src/Api/ChangePrice.php',
-    'Adsfwc\\Api\\RegisterTab' => $baseDir . '/src/Api/RegisterTab.php',
-    'Adsfwc\\Init' => $baseDir . '/src/Init.php',
 );

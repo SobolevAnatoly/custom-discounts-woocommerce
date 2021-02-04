@@ -20,18 +20,11 @@ class ComposerStaticInitcdef40a1a3b48d1e44958340f6ce1a1b
         ),
     );
 
-    public static $classMap = array (
-        'Adsfwc\\Api\\ChangePrice' => __DIR__ . '/../..' . '/src/Api/ChangePrice.php',
-        'Adsfwc\\Api\\RegisterTab' => __DIR__ . '/../..' . '/src/Api/RegisterTab.php',
-        'Adsfwc\\Init' => __DIR__ . '/../..' . '/src/Init.php',
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitcdef40a1a3b48d1e44958340f6ce1a1b::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitcdef40a1a3b48d1e44958340f6ce1a1b::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitcdef40a1a3b48d1e44958340f6ce1a1b::$classMap;
 
         }, null, ClassLoader::class);
     }
