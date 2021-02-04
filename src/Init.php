@@ -50,9 +50,9 @@ final class Init
     public static function getServices()
     {
         return [
+	        Admin\RegisterAdminPage::class,
             Api\RegisterTab::class,
             Api\ChangePrice::class,
-           // Setup\EnqueueScripts::class,
         ];
     }
 
