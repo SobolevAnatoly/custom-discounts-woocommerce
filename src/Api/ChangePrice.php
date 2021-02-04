@@ -42,6 +42,7 @@ class ChangePrice
     /**
      * @param $price
      * @param $product
+     *
      * @return string|null
      * The method recalculates the price taking into account the discount and
      * replaces the basic price. (single product and loop)
@@ -49,16 +50,19 @@ class ChangePrice
      */
     public function showAdvancedDiscountAmount($price, $product)
     {
-        if (is_admin()) return $price;
+        if (is_admin()) {
+            return $price;
+        }
 
-        $product_id = $product->get_id();
-        $discount_data = $this->getRolesAndDiscounts($product_id);
-        $role = $discount_data->role ?? null;
-        $discount_amount = !empty($discount_data->discount) ? $discount_data->discount : null;
+        $product_id      = $product->get_id();
+        $discount_data   = $this->getRolesAndDiscounts($product_id);
+        $discount_amount = ! empty($discount_data->discount) ? $discount_data->discount : null;
 
-        if ($discount_amount && wc_current_user_has_role($role)) {
+        if ($discount_amount) {
             $orig_price = $product->get_regular_price();
-            $price = !empty($orig_price) ? wc_price($orig_price - ($orig_price * ($discount_amount / 100))) : null;
+            $price      = ! empty($orig_price) ? wc_price(
+                $orig_price - ($orig_price * ($discount_amount / 100))
+            ) : null;
         }
 
 
@@ -72,44 +76,48 @@ class ChangePrice
      */
     public function showAdvancedDiscountAmountCart($cart)
     {
-        if (is_admin() && !defined('DOING_AJAX')) return;
-
-        if (did_action('woocommerce_before_calculate_totals') >= 2) return;
-
-        $role = $this->getRolesAndDiscounts()->role ?? null;
-        if (!wc_current_user_has_role($role)) return;
-
-        foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
-            $product = $cart_item['data'];
-            $product_id = $product->get_id();
-            $discount_data = $this->getRolesAndDiscounts($product_id);
-            $discount_amount = !empty($discount_data->discount) ? $discount_data->discount : null;
-            $orig_price = isset($discount_amount) ? $product->get_regular_price() : null;
-            $price = !empty($orig_price) ? $orig_price - ($orig_price * ($discount_data->discount / 100)) : null;
-
-            if ($price)
-                $cart_item['data']->set_price($price);
-
-
+        if (is_admin() && ! defined('DOING_AJAX')) {
+            return;
         }
 
+        if (did_action('woocommerce_before_calculate_totals') >= 2) {
+            return;
+        }
+
+        foreach ($cart->get_cart() as $cart_item_key => $cart_item) {
+            $product         = $cart_item['data'];
+            $product_id      = $product->get_id();
+            $discount_data   = $this->getRolesAndDiscounts($product_id);
+            $discount_amount = ! empty($discount_data->discount) ? $discount_data->discount : null;
+            $orig_price      = isset($discount_amount) ? $product->get_regular_price() : null;
+            $price           = ! empty($orig_price) ? $orig_price - ($orig_price * ($discount_data->discount / 100)) : null;
+
+            if ($price) {
+                $cart_item['data']->set_price($price);
+            }
+        }
     }
 
     /**
      * @param null $product_id
+     *
      * @return mixed
      * The method determines the role of the current visitor and returns an object
      * containing the role and discount amount
      */
     public function getRolesAndDiscounts($product_id = null)
     {
+        $settings = (array)get_option('advanced_discounts_plugin_options');
+
         if (is_user_logged_in()) {
-            $roles = [];
+            $roles      = [];
             $user_roles = wp_get_current_user()->roles;
+            $field      = "discount_setting_registered_amount";
+            $value      = ! empty(esc_attr($settings[$field])) ? esc_attr($settings[$field]) : 0;
 
             foreach ($user_roles as $role) {
-                $role = strtolower(preg_replace('/\s+/', '_', $role));
-                $role_discount = !empty(
+                $role          = strtolower(preg_replace('/\s+/', '_', $role));
+                $role_discount = ! empty(
                 get_post_meta(
                     $product_id,
                     '_' . $role . '_discount_input',
@@ -119,11 +127,16 @@ class ChangePrice
                     $product_id,
                     '_' . $role . '_discount_input',
                     true
-                ) : '';
+                ) : $value;
 
                 $roles = ['role' => $role, 'discount' => $role_discount];
-
             }
+
+            return json_decode(json_encode($roles));
+        } else {
+            $field = "discount_setting_unregistered_amount";
+            $value = ! empty(esc_attr($settings[$field])) ? esc_attr($settings[$field]) : 0;
+            $roles = ['role' => 'Guest', 'discount' => $value];
 
             return json_decode(json_encode($roles));
         }
