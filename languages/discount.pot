@@ -1,0 +1,51 @@
+# Copyright (C) 2020 Anatolii S.
+# This file is distributed under the same license as the Advanced discounts system for WooCommerce plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Advanced discounts system for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/Advanced-discounts-system-for-WooCommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-10-18T23:25:18+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: advanced-discounts\n"
+
+#. Plugin Name of the plugin
+msgid "Advanced discounts system for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://github.com/SobolevAnatoly/Advanced-discounts-system-for-WooCommerce"
+msgstr ""
+
+#. Description of the plugin
+msgid "Advanced discounts system for WooCommerce. The plugin allows you to set a product discount amount for each customer role."
+msgstr ""
+
+#. Author of the plugin
+msgid "Anatolii S."
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://github.com/SobolevAnatoly"
+msgstr ""
+
+#: src/Api/RegisterTab.php:24
+msgid "Role discounts"
+msgstr ""
+
+#: src/Api/RegisterTab.php:39
+msgid "There you can set discount for different users role."
+msgstr ""
+
+#: src/Api/RegisterTab.php:40
+msgid "Discount calculate in % and must be typed as an integer from 0 to 100. If the field is left blank, will be displayed the price that specified in the General tab"
+msgstr ""
+
+#: src/Api/RegisterTab.php:47
+msgid "Discount for "
+msgstr ""

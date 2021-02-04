@@ -1,0 +1,30 @@
+{
+  "name": "barbarian/Custom-discounts-system-for-WooCommerce",
+  "description": "Custom discounts system for WooCommerce. The plugin allows you to set a product discount amount for for registered users and users role.",
+  "keywords": [
+    "WordPress",
+    "Plugin",
+    "WooCommerce"
+  ],
+  "type": "project",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Anatolii S.",
+      "email": "sobolev.anatoly@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.2"
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": "^2.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adsfwc\\": "./src"
+    }
+  }
+}
